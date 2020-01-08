@@ -69,20 +69,13 @@ CREATE DATABASE %s
   seen = {}
   for d in range(len(df_full)):
     bar.update(d+1)
-    item = "transaction" \
-           + ",brand=%s" % str(df_full["brand"][d]).replace(" ", "_") \
-           + ",user_gender=%s" % str(df_full["user_gender"][d]).replace(" ", "_") \
+    item = "intraday" \
+           + ",sid=%s" % str(df_full["sid"][d]).replace(" ", "\ ") \
            + " " \
-           + "model=\"%s\"" % str(df_full["model"][d]) \
-           + ",area=\"%s\"" % str(df_full["area"][d]) \
-           + ",user_name=\"%s\"" % str(df_full["user_name"][d]) \
-           + ",quantity=%s" % str(df_full["quantity"][d]) \
-           + ",store=%s" % str(df_full["store"][d]) \
-           + ",price=%s" % str(df_full["price"][d]) \
-           + ",user_age=%s" % str(df_full["user_age"][d]) \
+           + "lst=%s" % str(df_full["lst"][d]).replace("nan", "0.0") \
+           + ",von=%s" % str(df_full["von"][d]).replace("nan", "0.0") \
            + " " \
-           + str(int(datetime.datetime.strptime(df_full["time"][d], "%Y-%m-%d %H:%M:%S").timestamp())*1000000000)
-           # + str(df_full["time"][d])
+           + str(df_full["time"][d])
 
     if item in seen: continue
     theImportFile.write("%s\n" % item)
